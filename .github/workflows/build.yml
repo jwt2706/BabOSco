@@ -23,11 +23,11 @@ jobs:
 
       - name: Download Cosmos User Kit
         run: |
-          curl -L -o CosmosUserKit.exe https://github.com/CosmosOS/Cosmos/releases/download/UserKit_20221121/CosmosUserKit-20221121-vs2022.exe
+          curl -L -o CosmosUserKit-20221121-vs2022.exe https://github.com/CosmosOS/Cosmos/releases/download/UserKit_20221121/CosmosUserKit-20221121-vs2022.exe
 
       - name: Install Cosmos User Kit
         run: |
-          CosmosUserKit.exe /S
+          ./CosmosUserKit-20221121-vs2022.exe /S
 
       - name: Install Visual Studio 2022 Community
         run: |
