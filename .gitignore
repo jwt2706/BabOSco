@@ -1,4 +1,6 @@
 BaboscOS.sln
 BaboscOS/bin
 BaboscOS/obj
+BaboscOS/BaboscOs.csproj
+BaboscOS/BaboscOs.csproj.user
 .vs/
