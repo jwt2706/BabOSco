@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using Sys = Cosmos.System;
+using BaboscOS.commands;
 
 namespace BaboscOS
 {
     public class Kernel : Sys.Kernel
     {
-        private bool isRunning = true;
+        private shutdownCmd shutdownCmd = new shutdownCmd();
+        private restartCmd restartCmd = new restartCmd();
 
         protected override void BeforeRun()
         {
@@ -21,13 +23,11 @@ namespace BaboscOS
 
         protected override void Run()
         {
-            while (isRunning) {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("user@BaboscOS$ ");
-                Console.ResetColor();
-                var input = Console.ReadLine();
-                HandleCommand(input);
-            }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("user@BaboscOS$ ");
+            Console.ResetColor();
+            var input = Console.ReadLine();
+            HandleCommand(input);
         }
 
         private void HandleCommand(string input) {
@@ -37,8 +37,11 @@ namespace BaboscOS
                     ShowHelp();
                     break;
                 case "shutdown":
-                    HandleShutdown();
+                    shutdownCmd.Execute();
                     break;;
+                case "restart":
+                    restartCmd.Execute();
+                    break;
                 case "fetch":
                     FetchSystemInfo();
                     break;
@@ -58,23 +61,8 @@ namespace BaboscOS
             Console.WriteLine(@"Available commands:
 help - Show this help message.
 shutdown - Shutdown the system.
+restart - Restart the system.
 fetch - Fetch and display system information.");
-        }
-
-         private void HandleShutdown()
-        {
-            Console.Write("Are you sure you want to shutdown? (y/n): ");
-            var confirmation = Console.ReadLine().ToLower().Trim();
-            if (confirmation == "y")
-            {
-                isRunning = false;
-                Console.WriteLine("Shutting down...");
-                Sys.Power.Shutdown();
-            }
-            else
-            {
-                Console.WriteLine("Shutdown cancelled.");
-            }
         }
 
         private void FetchSystemInfo() {
