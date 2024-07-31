@@ -21,11 +21,18 @@ jobs:
         with:
           dotnet-version: "6.0.x"
 
-      - name: Install Cosmos dependencies
+      - name: Download Cosmos User Kit
         run: |
-          choco install cosmos-userkit --pre
-          choco install visualstudio2019community --package-parameters "--add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetCoreTools --includeRecommended --includeOptional"
-          choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --includeOptional"
+          curl -L -o CosmosUserKit.exe https://github.com/CosmosOS/Cosmos/releases/download/UserKit_20221121/CosmosUserKit-20221121-vs2022.exe
+
+      - name: Install Cosmos User Kit
+        run: |
+          CosmosUserKit.exe /S
+
+      - name: Install Visual Studio 2022 Community
+        run: |
+          choco install visualstudio2022community --package-parameters "--add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetCoreTools --includeRecommended --includeOptional"
+          choco install visualstudio2022buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --includeOptional"
 
       - name: Restore NuGet packages
         run: dotnet restore BaboscOS/BaboscOS.csproj
