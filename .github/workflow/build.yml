@@ -1,0 +1,43 @@
+name: Build BaboscOS
+
+on:
+  push:
+    branches:
+      - workflow
+  pull_request:
+    branches:
+      - workflow
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Install Cosmos dependencies
+        run: |
+          choco install cosmos-userkit --pre
+          choco install visualstudio2019community --package-parameters "--add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetCoreTools --includeRecommended --includeOptional"
+          choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --includeOptional"
+
+      - name: Restore NuGet packages
+        run: dotnet restore BaboscOS/BaboscOS.csproj
+
+      - name: Build BaboscOS
+        run: dotnet build BaboscOS/BaboscOS.csproj --configuration Release
+
+      - name: Publish BaboscOS
+        run: dotnet publish BaboscOS/BaboscOS.csproj --configuration Release --output ./output
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: BaboscOS
+          path: ./output
