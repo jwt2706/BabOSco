@@ -1,10 +1,8 @@
-# BaboscOS
-just to say i made one
+# BabOSco
 
-
-things to add:
-- file system
-- text editor (similar to vi or something)
-- some sort of calculator
-- shell history
-- better fetch, sys monitor
+- BabOSco: Bare and Basic Operating System for Core Operations
+- Babsh: Bare and Basic Shell
+- file sys, text editor (BabE)
+- BabScript
+- BabC
+- networking, drivers, gui
