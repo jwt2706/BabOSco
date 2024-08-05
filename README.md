@@ -1,6 +1,6 @@
 # BabOSco
 
-- BabOSco: Bare and Basic Operating System for Core Operations
+- BabOSco: Bare and Basic Operating System for Core Objectives
 - Babsh: Bare and Basic Shell
 - file sys, text editor (BabE)
 - BabScript
