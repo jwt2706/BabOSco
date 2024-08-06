@@ -61,4 +61,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: BabOSco
-        path: BabOSco.iso
+        path: |
+          BabOSco.iso
+          kernel.bin
