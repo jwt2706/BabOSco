@@ -3,12 +3,10 @@ ENTRY(kernel)
 SECTIONS
 {
     . = 0x100000;
-    .multiboot2 :
-    {
-        *(.multiboot2)
-    }
+        
     .text :
     {
+        *(.multiboot2)
         *(.text)
     }
     .rodata :
