@@ -27,7 +27,7 @@ jobs:
         cd binutils-2.36
         mkdir build
         cd build
-        ../configure --target=i686-elf --prefix="$HOME/opt/cross" --disable-nls --disable-werror
+        ../configure --target=x86_64-elf --prefix="$HOME/opt/cross" --disable-nls --disable-werror
         make
         make install
         cd $HOME/opt
@@ -36,7 +36,7 @@ jobs:
         cd gcc-10.2.0
         mkdir build
         cd build
-        ../configure --target=i686-elf --prefix="$HOME/opt/cross" --disable-nls --enable-languages=c,c++ --without-headers
+        ../configure --target=x86_64-elf --prefix="$HOME/opt/cross" --disable-nls --enable-languages=c,c++ --without-headers
         make all-gcc
         make all-target-libgcc
         make install-gcc
@@ -45,9 +45,9 @@ jobs:
 
     - name: Build Kernel
       run: |
-        nasm -f elf multiboot.asm -o multiboot.o
-        i686-elf-gcc -c kernel.c -o kernel.o -ffreestanding -O2 -Wall -Wextra
-        i686-elf-gcc -T linker.ld -o kernel.bin -ffreestanding -O2 -nostdlib multiboot.o kernel.o -lgcc
+        nasm -f elf64 multiboot.asm -o multiboot.o
+        x86_64-elf-gcc -c kernel.c -o kernel.o -ffreestanding -O2 -Wall -Wextra
+        x86_64-elf-gcc -T linker.ld -o kernel.bin -ffreestanding -O2 -nostdlib multiboot.o kernel.o -lgcc
 
     - name: Create Bootable ISO
       run: |
