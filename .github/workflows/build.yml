@@ -45,9 +45,8 @@ jobs:
 
     - name: Build Kernel
       run: |
-        nasm -f elf64 multiboot.asm -o multiboot.o
         x86_64-elf-gcc -c kernel.c -o kernel.o -ffreestanding -O2 -Wall -Wextra
-        x86_64-elf-gcc -T linker.ld -o kernel.bin -ffreestanding -O2 -nostdlib multiboot.o kernel.o -lgcc
+        x86_64-elf-gcc -T linker.ld -o kernel.bin -ffreestanding -O2 -nostdlib kernel.o -lgcc
 
     - name: Create Bootable ISO
       run: |

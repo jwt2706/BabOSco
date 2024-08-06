@@ -1,3 +1,6 @@
+#include <stdint.h>
+#include "multiboot.h"
+
 void kernel(void) {
 
     char *video_memory = (char *) 0xb8000; // pointer to the starting address for the video memory in x86 archetecture
