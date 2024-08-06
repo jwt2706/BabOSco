@@ -36,7 +36,7 @@ jobs:
         cd gcc-10.2.0
         mkdir build
         cd build
-        ../configure --target=i686-elf --prefix="$HOME/opt/cross" --disable-nls --enable-languages=c,c++ --without-headers
+        ../configure --target=i686-elf --prefix="$HOME/opt/cross" --disable-nls --enable-languages=c,c++ --without-headers --with-gmp=$(brew --prefix gmp) --with-mpfr=$(brew --prefix mpfr) --with-mpc=$(brew --prefix libmpc)
         make all-gcc
         make all-target-libgcc
         make install-gcc
