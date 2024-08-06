@@ -19,7 +19,7 @@ jobs:
     - name: Set up cross-compiler
       run: |
         sudo apt-get update
-        sudo apt-get install -y bison flex libgmp3-dev libmpfr-dev libmpc-dev texinfo
+        sudo apt-get install -y bison flex libgmp3-dev libmpfr-dev libmpc-dev texinfo nasm
         mkdir -p $HOME/opt
         cd $HOME/opt
         wget https://ftp.gnu.org/gnu/binutils/binutils-2.36.tar.gz
@@ -45,8 +45,9 @@ jobs:
 
     - name: Build Kernel
       run: |
+        nasm -f elf multiboot.asm -o multiboot.o
         i686-elf-gcc -c kernel.c -o kernel.o -ffreestanding -O2 -Wall -Wextra
-        i686-elf-gcc -T linker.ld -o kernel.bin -ffreestanding -O2 -nostdlib kernel.o -lgcc
+        i686-elf-gcc -T linker.ld -o kernel.bin -ffreestanding -O2 -nostdlib multiboot.o kernel.o -lgcc
 
     - name: Create Bootable ISO
       run: |
