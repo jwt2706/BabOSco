@@ -16,4 +16,6 @@ void kernel(void) {
     for (int i=0; message[i]!='\0'; i++) {
         video_memory[i*2] = message[i];
     }
+
+    while (1); // infinite loop, just to keep the kernel alive
 }
