@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "multiboot.h"
+#include "multiboot2.h"
 
 void kernel(void) {
 
