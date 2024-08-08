@@ -1,6 +1,4 @@
-BaboscOS.sln
-BaboscOS/bin
-BaboscOS/obj
-BaboscOS/BaboscOs.csproj
-BaboscOS/BaboscOs.csproj.user
-.vs/
+iso/
+*.iso
+kernel.bin
+kernel.o
