@@ -16,7 +16,9 @@ CFLAGS = -ffreestanding -O2 -Wall -Wextra
 LDFLAGS = -T linker.ld -ffreestanding -O2 -nostdlib
 
 # Targets
-all: $(ISO)
+all: build run
+
+build: $(ISO)
 
 $(KERNEL): kernel.c
 	$(CROSS)gcc -c $< -o kernel.o $(CFLAGS)
@@ -28,10 +30,10 @@ $(ISO): $(KERNEL) $(GRUB_CFG)
 	cp $(GRUB_CFG) $(GRUB_DIR)/$(GRUB_CFG)
 	grub-mkrescue -o $@ $(ISO_DIR)
 
-run: $(ISO)
-	qemu-system-x86_64 -cdrom $<
+run:
+	qemu-system-x86_64 -cdrom $(ISO)
 
 clean:
 	rm -rf $(ISO_DIR) $(KERNEL) kernel.o $(ISO)
 
-.PHONY: all run clean
+.PHONY: all build run clean
