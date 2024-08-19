@@ -26,6 +26,7 @@ void draw_char(struct limine_framebuffer *framebuffer, char c, int x, int y, uin
 
                         // and set the pixel color
                         framebuffer_address[vertical_position * pixels_per_row + horizontal_position] = color;
+                    }
                 }
             }
         }
