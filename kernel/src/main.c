@@ -98,24 +98,35 @@ size_t strlen(const char *str) {
 }
 
 // draw a character on the framebuffer
-void draw_char(struct limine_framebuffer *framebuffer, char c, int x, int y, uint32_t color) {
+void draw_char(struct limine_framebuffer *framebuffer, char c, int x, int y, uint32_t color, int scale) {
     if (c < 32 || c > 127) return; // only handle ASCII characters
 
-    const uint8_t *glyph = font[c - 32]; // TODO: make the character scalable
+    const uint8_t *glyph = font[c - 32];
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
             if (glyph[i] & (1 << j)) {
-                ((uint32_t *)framebuffer->address)[(y + i) * (framebuffer->pitch / 4) + (x + j)] = color;
+                for (int dy = 0; dy < scale; dy++) {
+                    for (int dx = 0; dx < scale; dx++) {
+                        ((uint32_t *)framebuffer->address)[(y + i * scale + dy) * (framebuffer->pitch / 4) + (x + j * scale + dx)] = color;
+                    }
+                }
             }
         }
     }
 }
 
 // draw a string on the framebuffer
-void draw_string(struct limine_framebuffer *framebuffer, const char *str, int x, int y, uint32_t color) {
+void draw_string(struct limine_framebuffer *framebuffer, const char *str, int x, int y, uint32_t color, int scale) {
+    int startX = x;
     while (*str) {
-        draw_char(framebuffer, *str++, x, y, color);
-        x += 8; // TODO: make this configurable, so that its not just offsetting for 8bit characters, maybe a way to have bigger fonts?
+        if (*str == '\n') {
+            y += 8 * scale;
+            x = startX;
+        } else {
+            draw_char(framebuffer, *str, x, y, color, scale);
+            x += 8 * scale;
+        }
+        str++;
     }
 }
 
@@ -143,7 +154,7 @@ void _start(void) {
     // Fetch the first framebuffer.
     struct limine_framebuffer *framebuffer = framebuffer_request.response->framebuffers[0];
 
-    draw_string(framebuffer, "HELLO, this is crazy!!??```~~~==-", 10, 10, COLOR_WHITE); // Use COLOR_WHITE instead of 0xffffff
+    draw_string(framebuffer, "HELLO, this is crazy!!??```~~\n~==-", 10, 10, COLOR_WHITE, 2);
 
     // We're done, just hang...
     hcf();
