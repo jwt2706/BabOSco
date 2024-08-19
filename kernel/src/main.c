@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <limine.h>
+#include "../include/colors.h"
 
 // Set the base revision to 2, this is recommended as this is the latest
 // base revision described by the Limine boot protocol specification.
@@ -240,7 +241,7 @@ void _start(void) {
     // Fetch the first framebuffer.
     struct limine_framebuffer *framebuffer = framebuffer_request.response->framebuffers[0];
 
-    draw_string(framebuffer, "HELLO, this is crazy!!??```~~~==-", 10, 10, 0xffffff); // TODO: have a map for colors
+    draw_string(framebuffer, "HELLO, this is crazy!!??```~~~==-", 10, 10, COLOR_WHITE);
 
     // We're done, just hang...
     hcf();
