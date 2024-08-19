@@ -1,4 +1,5 @@
-iso/
+/limine
+/ovmf
 *.iso
-kernel.bin
-kernel.o
+*.hdd
+qemu.log
