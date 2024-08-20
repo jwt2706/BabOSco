@@ -63,7 +63,7 @@ void _start(void) {
     // Fetch the first framebuffer.
     struct limine_framebuffer *framebuffer = framebuffer_request.response->framebuffers[0];
 
-    draw_string(framebuffer, "HELLO, this is crazy!!??```~~\n~==-", 10, 10, COLOR_WHITE, 2);
+    draw_string(framebuffer, "!#$%&'()*+,-./\n\n0123456789:;<=>?@\n\nABCDEFGHIJKLMNOPQRSTUVWXYZ\n\n[\]^_`\n\nabcdefghijklmnopqrstuvwxyz\n\n{}~|||\"", 10, 10, COLOR_WHITE, 2);
 
     // We're done, just hang...
     hcf();
