@@ -1,5 +1,6 @@
 #include "../include/text.h"
 #include "../include/font.h"
+#include <stdio.h>
 
 void draw_char(struct limine_framebuffer *framebuffer, char c, int x, int y, uint32_t color, int scale) {
     if (c < 32 || c > 127) return; // only handle ASCII characters
