@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <limine.h>
 #include "../include/colors.h"
-#include "../include/text.h"
+#include "../include/terminal.h"
 
 // Set the base revision to 2, this is recommended as this is the latest
 // base revision described by the Limine boot protocol specification.
@@ -63,7 +63,13 @@ void _start(void) {
     // Fetch the first framebuffer.
     struct limine_framebuffer *framebuffer = framebuffer_request.response->framebuffers[0];
 
-    draw_string(framebuffer, "HELLO, this is crazy!!??```~~\n~==-", 10, 10, COLOR_WHITE, 2);
+    // init the terminal
+    struct terminal term;
+    terminal_init(&term, framebuffer, COLOR_WHITE, 2);
+
+    terminal_write(&term, "BaboscOS booted up successfully!");
+    terminal_edit(&term, COLOR_RED, 3);
+    terminal_write(&term, "red color and scale 3");
 
     // We're done, just hang...
     hcf();
