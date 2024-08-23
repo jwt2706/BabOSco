@@ -3,8 +3,13 @@
 
 void terminal_init(struct terminal *term, struct limine_framebuffer *framebuffer, uint32_t color, int scale) {
     term->framebuffer = framebuffer;
-    term->cursor_x = 0;
-    term->cursor_y = 0;
+    term->cursor_x = 4;
+    term->cursor_y = 4;
+    term->color = color;
+    term->scale = scale;
+}
+
+void terminal_edit(struct terminal *term, uint32_t color, int scale) {
     term->color = color;
     term->scale = scale;
 }

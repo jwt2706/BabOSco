@@ -65,9 +65,11 @@ void _start(void) {
 
     // init the terminal
     struct terminal term;
-    terminal_init(&term, framebuffer, COLOR_BLUE, 2);
+    terminal_init(&term, framebuffer, COLOR_WHITE, 2);
 
     terminal_write(&term, "BaboscOS booted up successfully!");
+    terminal_edit(&term, COLOR_RED, 3);
+    terminal_write(&term, "red color and scale 3");
 
     // We're done, just hang...
     hcf();
