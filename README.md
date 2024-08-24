@@ -1,10 +1,11 @@
-# BabOSco
+# BaboscOS
 
 [![Build](https://github.com/jwt2706/BaboscOS/actions/workflows/build.yml/badge.svg)](https://github.com/jwt2706/BaboscOS/actions/workflows/build.yml)
 
-<i>Basic</i> (x86) <i>Architecture</i> (with) <i>Built-in Open Source Components OS</i> (insane naming)
+BaboscOS: <i>Bare And Basic Open Source Console-based Operating System</i> (insane naming, i know)
 
-okay im staring with [this](https://github.com/limine-bootloader/limine-c-template) and ill see where this goes
-eventually ill work over the parts i used as a base
+Super bare and basic 64bit operating system featuring a limine protocol compliant (higher half) kernel.
 
-featureing a 64-bit higher half Limine protocol-compliant kernel
+I wanted to build an os one day, and so now im finally attempting that. I decided to start off with this [limine template](https://github.com/limine-bootloader/limine-c-template) after reading the osdev wiki for so dang long. I figured it was a better place to start than to write my own bootloader lol (but i do plan on doing that one day).
+
+I got some cool ideas for this project, but we're taking things one at a time. idk if im going to write seperate docs on this or just really take the time to just write out my thought process in comments but yeah
