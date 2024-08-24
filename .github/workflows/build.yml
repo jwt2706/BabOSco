@@ -29,13 +29,16 @@ jobs:
           path: BaboscOS.iso
 
       - name: Fetch tags
+        if: github.ref == 'refs/heads/main'
         run: git fetch --tags
 
       - name: Get latest tag
+        if: github.ref == 'refs/heads/main'
         id: get_latest_tag
         run: echo "latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
 
       - name: Determine version increment
+        if: github.ref == 'refs/heads/main'
         id: determine_increment
         run: |
           if [[ "${{ github.event.pull_request.title }}" == *"minor"* ]]; then
@@ -45,6 +48,7 @@ jobs:
           fi
 
       - name: Increment version
+        if: github.ref == 'refs/heads/main'
         id: increment_version
         run: |
           latest_tag=${{ env.latest_tag }}
