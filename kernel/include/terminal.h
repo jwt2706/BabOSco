@@ -6,6 +6,8 @@
 
 struct terminal {
     struct limine_framebuffer *framebuffer;
+    int start_x;
+    int start_y;
     int cursor_x;
     int cursor_y;
     uint32_t color;
