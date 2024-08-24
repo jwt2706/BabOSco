@@ -20,16 +20,19 @@ void terminal_edit(struct terminal *term, uint32_t color, int scale) {
 */
 void terminal_write(struct terminal *term, const char *str) {
     int start_x = term->cursor_x;
+    int max_x = term->framebuffer->width - 8 * term->scale; // maximum x position before wrapping
     while (*str) {
-        if (*str == '\n') { // if the character is a newline..
+        if (*str == '\n' || term->cursor_x > max_x) { // if the character is a newline or cursor exceeds max_x..
             term->cursor_y += 8 * term->scale; // ..offset y
             term->cursor_x = start_x; // ..and reset x
-        } else {
+        }
+        if (*str != '\n') {
             terminal_write_char(term, *str);
             term->cursor_x += 8 * term->scale; // offset x for each new character so they don't just print on top of each other
         }
         str++;
     }
+    term->cursor_x = start_x;
 }
 
 /*
