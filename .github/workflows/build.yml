@@ -42,6 +42,7 @@ jobs:
             echo "increment=minor" >> $GITHUB_ENV
           else
             echo "increment=patch" >> $GITHUB_ENV
+          fi
 
       - name: Increment version
         id: increment_version
@@ -74,8 +75,6 @@ jobs:
         with:
           tag_name: ${{ env.new_version }}
           release_name: ${{ env.new_version }}_${{ github.run_number }}
-          body: |
-            Release notes for version ${{ env.new_version }}.
           draft: false
           prerelease: false
 

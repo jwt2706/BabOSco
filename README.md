@@ -1,5 +1,7 @@
 # BabOSco
 
+[![Build](https://github.com/jwt2706/BaboscOS/actions/workflows/build.yml/badge.svg)](https://github.com/jwt2706/BaboscOS/actions/workflows/build.yml)
+
 <i>Basic</i> (x86) <i>Architecture</i> (with) <i>Built-in Open Source Components OS</i> (insane naming)
 
 okay im staring with [this](https://github.com/limine-bootloader/limine-c-template) and ill see where this goes
