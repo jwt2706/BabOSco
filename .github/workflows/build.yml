@@ -27,3 +27,64 @@ jobs:
         with:
           name: BaboscOS.iso
           path: BaboscOS.iso
+
+      - name: Fetch tags
+        run: git fetch --tags
+
+      - name: Get latest tag
+        id: get_latest_tag
+        run: echo "latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
+
+      - name: Determine version increment
+        id: determine_increment
+        run: |
+          if [[ "${{ github.event.pull_request.title }}" == *"minor"* ]]; then
+            echo "increment=minor" >> $GITHUB_ENV
+          else
+            echo "increment=patch" >> $GITHUB_ENV
+          fi
+
+      - name: Increment version
+        id: increment_version
+        run: |
+          latest_tag=${{ env.latest_tag }}
+          increment=${{ env.increment }}
+          if [ -z "$latest_tag" ]; then
+            new_version="v0.1.0"
+          else
+            IFS='.' read -r -a version_parts <<< "${latest_tag#v}"
+            major=${version_parts[0]}
+            minor=${version_parts[1]}
+            patch=${version_parts[2]}
+            if [ "$increment" == "minor" ]; then
+              minor=$((minor + 1))
+              patch=0
+            else
+              patch=$((patch + 1))
+            fi
+            new_version="v${major}.${minor}.${patch}"
+          fi
+          echo "new_version=$new_version" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        if: github.ref == 'refs/heads/main'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.new_version }}
+          release_name: ${{ env.new_version }}_${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: BaboscOS.iso
+          asset_name: BaboscOS.iso
+          asset_content_type: application/octet-stream
