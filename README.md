@@ -4,7 +4,7 @@
 
 BaboscOS: <i>Bare And Basic Open Source Console-based Operating System</i> (insane naming, i know)
 
-Super bare and basic 64bit operating system featuring a limine protocol compliant (higher half) kernel.
+Super simple 64bit operating system featuring a limine protocol compliant (higher half) kernel. It's just built for x86 right now
 
 I wanted to build an os one day, and so now im finally attempting that. I decided to start off with this [limine template](https://github.com/limine-bootloader/limine-c-template) after reading the osdev wiki for so dang long. I figured it was a better place to start than to write my own bootloader lol (but i do plan on doing that one day).
 
