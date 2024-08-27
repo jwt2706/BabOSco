@@ -1,6 +1,8 @@
 #include "../include/terminal.h"
 #include "../include/font.h"
 
+struct terminal term;
+
 void terminal_init(struct terminal *term, struct limine_framebuffer *framebuffer, uint32_t color, int scale) {
     term->framebuffer = framebuffer;
     term->start_x = 4;
@@ -11,6 +13,10 @@ void terminal_init(struct terminal *term, struct limine_framebuffer *framebuffer
     term->scale = scale;
 }
 
+/*
+    This allows us to change the color and scale of the terminal,
+    if we change our minds from what we initiallized the terminal with
+*/
 void terminal_edit(struct terminal *term, uint32_t color, int scale) {
     term->color = color;
     term->scale = scale;

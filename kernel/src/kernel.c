@@ -4,6 +4,8 @@
 #include <limine.h>
 #include "../include/colors.h"
 #include "../include/terminal.h"
+#include "../include/drivers/idt.h"
+#include "../include/drivers/keyboard.h"
 
 // Set the base revision to 2, this is recommended as this is the latest
 // base revision described by the Limine boot protocol specification.
@@ -63,14 +65,24 @@ void _start(void) {
     // Fetch the first framebuffer.
     struct limine_framebuffer *framebuffer = framebuffer_request.response->framebuffers[0];
 
-    // init the terminal
     struct terminal term;
-    terminal_init(&term, framebuffer, COLOR_WHITE, 2);
+    terminal_init(&term, framebuffer, COLOR_WHITE, 1);
+    terminal_write(&term, "Terminal initialized...\n");
 
-    terminal_write(&term, "BaboscOS booted up successfully!BaboscOS booted up successfully!BaboscOS booted up successfully!");
-    terminal_edit(&term, COLOR_RED, 3);
-    terminal_write(&term, "red color and scalesadasdasdsads 3");
+    idt_install(&term);
+    terminal_write(&term, "IDT installed...\n");
+    keyboard_init();
+    terminal_write(&term, "Keyboard initialized...\n");
 
+    terminal_edit(&term, COLOR_WHITE, 1);
+    terminal_write(&term, "BaboscOS booted up successfully!\n\n\n");
+    terminal_edit(&term, COLOR_YELLOW, 8);
+    terminal_write(&term, "BaboscOS");
+    terminal_edit(&term, COLOR_YELLOW, 2);
+    terminal_write(&term, " v0.0.1\n\n\n\n");
+    terminal_edit(&term, COLOR_GREEN, 2);
+    terminal_write(&term, "user@babosc:~$_");
+    
     // We're done, just hang...
     hcf();
 }
