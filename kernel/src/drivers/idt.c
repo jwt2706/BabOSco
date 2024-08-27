@@ -1,4 +1,5 @@
 #include "../../include/drivers/idt.h"
+#include "../../include/terminal.h"
 #include <string.h>
 
 #define IDT_SIZE 256
@@ -22,18 +23,21 @@ void idt_set_gate(int n, uint64_t handler) {
 
 void load_idt(struct idt_ptr* idt_ptr) {
     asm volatile ("lidt (%0)" : : "r"(idt_ptr)); // load idt
-    asm volatile ("sti"); // enable interrupts
+    asm volatile ("sti"); // set interrupt flag
 }
 
-void idt_install(struct terminal* term) {
+void idt_install() {
+    terminal_write("Installing IDT...\n");
     idt_ptr.limit = sizeof(struct idt_entry) * IDT_SIZE - 1;
     idt_ptr.base = (uint64_t)&idt;
 
     memset(&idt, 0, sizeof(struct idt_entry) * IDT_SIZE);
 
-    global_term = term;
-
+    terminal_write("Setting IDT gate for IRQ1...\n");
     idt_set_gate(33, (uint64_t)keyboard_interrupt_handler); // IRQ1
 
+    terminal_write("Loading IDT...\n");
     load_idt(&idt_ptr);
+
+    terminal_write("IDT is ready!\n");
 }

@@ -65,23 +65,19 @@ void _start(void) {
     // Fetch the first framebuffer.
     struct limine_framebuffer *framebuffer = framebuffer_request.response->framebuffers[0];
 
-    struct terminal term;
-    terminal_init(&term, framebuffer, COLOR_WHITE, 1);
-    terminal_write(&term, "Terminal initialized...\n");
+    terminal_init(framebuffer, COLOR_WHITE, 1);
 
-    idt_install(&term);
-    terminal_write(&term, "IDT installed...\n");
+    idt_install();
     keyboard_init();
-    terminal_write(&term, "Keyboard initialized...\n");
 
-    terminal_edit(&term, COLOR_WHITE, 1);
-    terminal_write(&term, "BaboscOS booted up successfully!\n\n\n");
-    terminal_edit(&term, COLOR_YELLOW, 8);
-    terminal_write(&term, "BaboscOS");
-    terminal_edit(&term, COLOR_YELLOW, 2);
-    terminal_write(&term, " v0.0.1\n\n\n\n");
-    terminal_edit(&term, COLOR_GREEN, 2);
-    terminal_write(&term, "user@babosc:~$_");
+    terminal_edit(COLOR_WHITE, 1);
+    terminal_write("BaboscOS booted up successfully!\n\n\n");
+    terminal_edit(COLOR_YELLOW, 8);
+    terminal_write("BaboscOS");
+    terminal_edit(COLOR_YELLOW, 2);
+    terminal_write(" v0.0.1\n\n\n\n");
+    terminal_edit(COLOR_GREEN, 2);
+    terminal_write("user@babosc:~$_");
     
     // We're done, just hang...
     hcf();

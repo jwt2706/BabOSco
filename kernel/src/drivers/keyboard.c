@@ -50,20 +50,22 @@ static uint8_t keyboard_map[128] = {
 };
 
 void keyboard_init() {
+    terminal_write("Initializing keyboard...\n");
     // unmask the keyboard interrupt (IRQ1)
     uint8_t mask = inb(PIC1_DATA);
     mask &= ~(1 << 1);
     outb(PIC1_DATA, mask);
+    terminal_write("Keyboard is ready!\n");
 }
 
-void keyboard_interrupt_handler(struct terminal* term) {
+void keyboard_interrupt_handler() {
     uint8_t status = inb(KEYBOARD_STATUS_PORT);
     if (status & 0x01) {
         uint8_t keycode = inb(KEYBOARD_DATA_PORT);
         if (keycode < 128) {
             char c = keyboard_map[keycode];
             if (c) {
-                terminal_write_char(&term, c);
+                terminal_write_char(c);
             }
         }
     }

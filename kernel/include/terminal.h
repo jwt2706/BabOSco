@@ -16,10 +16,10 @@ struct terminal {
 
 extern struct terminal term;
 
-void terminal_init(struct terminal *term, struct limine_framebuffer *framebuffer, uint32_t color, int scale);
-void terminal_edit(struct terminal *term, uint32_t color, int scale);
-void terminal_write(struct terminal *term, const char *str);
-void terminal_write_char(struct terminal *term, char c);
-void terminal_event(struct terminal *term, char c);
+void terminal_init(struct limine_framebuffer *framebuffer, uint32_t color, int scale);
+void terminal_edit(uint32_t color, int scale);
+void terminal_write(const char *str);
+void terminal_write_char(char c);
+void terminal_event(char c);
 
 #endif
