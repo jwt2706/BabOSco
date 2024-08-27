@@ -21,7 +21,8 @@ void idt_set_gate(int n, uint64_t handler) {
 }
 
 void load_idt(struct idt_ptr* idt_ptr) {
-    asm volatile ("lidt (%0)" : : "r"(idt_ptr));
+    asm volatile ("lidt (%0)" : : "r"(idt_ptr)); // load idt
+    asm volatile ("sti"); // enable interrupts
 }
 
 void idt_install(struct terminal* term) {
