@@ -14,6 +14,8 @@ struct terminal {
     int scale;
 };
 
+extern struct terminal term;
+
 void terminal_init(struct terminal *term, struct limine_framebuffer *framebuffer, uint32_t color, int scale);
 void terminal_edit(struct terminal *term, uint32_t color, int scale);
 void terminal_write(struct terminal *term, const char *str);
