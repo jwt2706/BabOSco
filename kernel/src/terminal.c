@@ -92,3 +92,17 @@ void terminal_event(char c) {
         terminal_write_char(c);
     }
 }
+
+void terminal_clear(uint32_t color) {
+    uint32_t *framebuffer_address = (uint32_t *)term.framebuffer->address;
+    int pixels_per_row = term.framebuffer->pitch / 4; // convert pitch from bytes to number of 32-bit pixels per row
+    int total_pixels = term.framebuffer->width * term.framebuffer->height;
+
+    for (int i = 0; i < total_pixels; i++) {
+        framebuffer_address[i] = color;
+    }
+
+    // Reset cursor position
+    term.cursor_x = term.start_x;
+    term.cursor_y = term.start_y;
+}

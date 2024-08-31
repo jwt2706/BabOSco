@@ -21,5 +21,6 @@ void terminal_edit(uint32_t color, int scale);
 void terminal_write(const char *str);
 void terminal_write_char(char c);
 void terminal_event(char c);
+void terminal_clear(uint32_t color);
 
 #endif
