@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+# This script builds the cross-compiler for the i686-elf target.
+# You'll only need to run this once, then you can build the os however many times you please
+
 # Set up environment variables
 export HOME="/home/jwt"
 export PREFIX="/opt/cross"
